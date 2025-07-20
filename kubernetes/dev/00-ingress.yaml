@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dev-cloudcortex-ingress
+  namespace: dev
+  labels:
+    env: dev
+    app: cloudcortex-ms
+    layer: frontend
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: dev.cloudcortex.in
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: cloudcortex-ms-service   # Replace with actual service name
+                port:
+                  number: 8080
